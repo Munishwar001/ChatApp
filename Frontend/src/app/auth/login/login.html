@@ -1,0 +1,55 @@
+<div class="login-container mat-elevation-z4">
+  <!-- Left Section -->
+  <div class="image-section">
+    <h1>Welcome back 👋</h1>
+    <h2>ChatSpace 🚀</h2>
+    <p>
+      Log in to continue your conversations and collaborate with your team —
+      fast, secure, and built with ❤️
+    </p>
+    <ng-lottie [options]="options"></ng-lottie>
+  </div>
+
+  <!-- Right Section -->
+  <div class="form-section">
+    <div class="logo">
+      <mat-icon color="primary">login</mat-icon>
+      <h2>Sign in to your account</h2>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email address</mat-label>
+        <input matInput type="email" formControlName="email" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" />
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" class="full-width" type="submit">
+        Login
+      </button>
+
+      <div class="divider">
+        <span>OR</span>
+      </div>
+
+      <button mat-stroked-button color="accent" class="auth-btn" (click)="loginWithGoogle()">
+        <i class="fa-brands fa-google" style="color: #74C0FC;"></i>
+        Continue with Google
+      </button>
+
+      <button mat-stroked-button color="accent" class="auth-btn" (click)="loginWithMicrosoft()">
+        <img src="assets/microsoft-logo.svg" alt="Microsoft" />
+        Continue with Microsoft
+      </button>
+
+      <p class="text-muted">
+        Don’t have an account?
+        <a routerLink="/register">Create one here</a>
+      </p>
+    </form>
+  </div>
+</div>

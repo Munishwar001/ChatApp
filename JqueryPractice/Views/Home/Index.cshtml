@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container mt-5 text-center">
+    <div class="d-flex justify-content-center gap-3">
+        <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#addDataModal">
+            <i class="bi bi-plus-circle me-2"></i>Add Data
+        </button>
+
+        <button type="button"
+                class="btn btn-success btn-lg"
+                id="updateBtn"
+                data-bs-toggle="modal"
+                data-bs-target="#updateDataModal">
+            <i class="bi bi-pencil-square me-2"></i>Update Data
+        </button>
+    </div>
+</div>
+
+   
+<div id="productTableContainer"></div>
+
+
+<script>
+    $(document).ready(function () {
+        loadProductTable(); 
+    });
+
+    function loadProductTable() {
+        $.ajax({
+            url: '/Home/GetProductTable',
+            type: 'GET',
+            success: function (result) {
+                $('#productTableContainer').html(result); 
+            },
+            error: function (xhr, status, error) {
+                console.error('Error loading product table:', error);
+                $('#productTableContainer').html('<div class="alert alert-danger">Failed to load products.</div>');
+            }
+        });
+    }
+</script>

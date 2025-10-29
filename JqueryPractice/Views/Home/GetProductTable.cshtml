@@ -1,0 +1,33 @@
+﻿@model List<JqueryPractice.Models.Products>
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Products List</h2>
+
+    <table class="table table-striped table-hover table-bordered align-middle text-center shadow-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Price</td>
+                    <td>@item.Quantity</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // Convert Model (products from DB) into a JS array
+    var existingDBNames = @Html.Raw(Json.Serialize(Model.Select(p => p.Name).ToList()));
+</script>
