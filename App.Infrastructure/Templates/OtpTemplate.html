@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            color: #007bff;
+        }
+
+        p {
+            font-size: 16px;
+        }
+
+        .otp {
+            font-size: 24px;
+            font-weight: bold;
+            color: #28a745;
+            letter-spacing: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Email Verification</h2>
+        <p>Hi,</p>
+        <p>Your One-Time Password (OTP) for verification is:</p>
+        <p class="otp">{{OTP}}</p>
+        <p>This code will expire in <b>5 minutes</b>.</p>
+        <p>If you didn’t request this, please ignore this email.</p>
+    </div>
+</body>
+</html>

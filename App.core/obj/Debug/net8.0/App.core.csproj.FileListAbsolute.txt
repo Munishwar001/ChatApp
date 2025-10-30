@@ -1,0 +1,12 @@
+C:\Users\Admin\Desktop\ChatApp\App.core\bin\Debug\net8.0\App.core.deps.json
+C:\Users\Admin\Desktop\ChatApp\App.core\bin\Debug\net8.0\App.core.dll
+C:\Users\Admin\Desktop\ChatApp\App.core\bin\Debug\net8.0\App.core.pdb
+C:\Users\Admin\Desktop\ChatApp\App.core\obj\Debug\net8.0\App.core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\Desktop\ChatApp\App.core\obj\Debug\net8.0\App.core.AssemblyInfoInputs.cache
+C:\Users\Admin\Desktop\ChatApp\App.core\obj\Debug\net8.0\App.core.AssemblyInfo.cs
+C:\Users\Admin\Desktop\ChatApp\App.core\obj\Debug\net8.0\App.core.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\ChatApp\App.core\obj\Debug\net8.0\App.core.sourcelink.json
+C:\Users\Admin\Desktop\ChatApp\App.core\obj\Debug\net8.0\App.core.dll
+C:\Users\Admin\Desktop\ChatApp\App.core\obj\Debug\net8.0\refint\App.core.dll
+C:\Users\Admin\Desktop\ChatApp\App.core\obj\Debug\net8.0\App.core.pdb
+C:\Users\Admin\Desktop\ChatApp\App.core\obj\Debug\net8.0\ref\App.core.dll

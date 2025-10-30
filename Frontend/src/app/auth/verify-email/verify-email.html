@@ -1,0 +1,35 @@
+<div class="verify-container">
+  <mat-card class="verify-card">
+    
+    <div class="left-section">
+      <h2>Verify your email 🔐</h2>
+      <p>Please enter the 6-digit code sent to your email</p>
+      <!-- <img src="assets/otp-email.png" alt="verify email" class="verify-img"> -->
+    </div>
+
+    <div class="right-section">
+      <form>
+
+        <mat-form-field appearance="outline" class="otp-field">
+          <mat-label>Enter OTP</mat-label>
+          <input 
+            matInput 
+            maxlength="6" 
+            [(ngModel)]="otp" 
+            name="otp"
+            placeholder="------" />
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" class="verify-btn" (click)="submitOtp()">
+          Verify
+        </button>
+
+        <div class="resend">
+          Didn’t receive code? <a>Resend</a>
+        </div>
+
+      </form>
+    </div>
+
+  </mat-card>
+</div>
