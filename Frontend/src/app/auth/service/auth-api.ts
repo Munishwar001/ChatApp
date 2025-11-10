@@ -17,5 +17,9 @@ export class AuthApi {
 
   verifyOtpAndRegister(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/verify-otp`, data);
-  }
+  } 
+  
+  login(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/login`, data);
+  } 
 }

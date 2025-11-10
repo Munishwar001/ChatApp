@@ -2,11 +2,9 @@
 using App.core.Constants;
 using App.core.DTOs.Auth;
 using App.Infrastructure.Identity;
-using App.Infrastructure.Services;
 using Backend.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Controllers
 {

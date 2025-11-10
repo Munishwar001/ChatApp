@@ -9,9 +9,11 @@ body, :host {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  height: 100vh;
   margin: 0;
   font-family: "Inter", "Roboto", sans-serif;
-  padding: 20px;
+  padding: 0;
+  overflow: hidden;
 }
 
 /* ================================
@@ -19,9 +21,11 @@ body, :host {
    ================================ */
 .login-container {
   display: flex;
-  flex-direction: row-reverse; /* ✅ Swaps left & right sections on desktop */
+  flex-direction: row-reverse;
   max-width: 950px;
-  width: 100%;
+  max-height: 90vh;
+  width: calc(100% - 40px);
+  margin: 20px;
   border-radius: 20px;
   overflow: hidden;
   background: #ffffff;
@@ -30,7 +34,6 @@ body, :host {
 
   &:hover {
     box-shadow: 0 12px 45px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
   }
 }
 
@@ -41,12 +44,13 @@ body, :host {
   flex: 1;
   background: #f7f9fb;
   color: #1a1a1a;
-  padding: 50px 40px;
+  padding: 40px 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: left;
   transition: 0.3s ease;
+  overflow-y: auto;
 
   h1 {
     font-size: 2rem;
@@ -81,11 +85,12 @@ body, :host {
    ================================ */
 .form-section {
   flex: 1;
-  padding: 40px 50px;
+  padding: 30px 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: left;
+  overflow-y: auto;
 
   .logo {
     display: flex;
@@ -195,27 +200,87 @@ body, :host {
    📱 Responsive Design
    ================================ */
 @media (max-width: 850px) {
-  .login-container {
-    flex-direction: column; /* ✅ Stack vertically */
-    max-width: 500px;
+  body, :host {
+    padding: 0;
+    align-items: center; /* ✅ Center vertically */
   }
 
-  /* ✅ Image section moves to top */
-  .image-section {
-    order: -1; /* Moves it above form */
-    padding: 30px 20px;
-    text-align: center;
+  .login-container {
+    flex-direction: column;
+    max-width: 500px;
+    width: calc(100% - 20px); /* ✅ Reduced margin */
+    margin: 10px;
+    max-height: 98vh; /* ✅ Almost full height */
+    overflow-y: auto; /* ✅ Container handles scroll if needed */
+  }
 
-    h1, h2, p {
-      text-align: center;
+  /* ✅ Compact image section on mobile */
+  .image-section {
+    order: -1;
+    padding: 20px 20px 15px 20px; /* ✅ Minimal padding */
+    text-align: center;
+    overflow: visible; /* ✅ No internal scroll */
+
+    h1 {
+      font-size: 1.5rem; /* ✅ Smaller heading */
+      margin-bottom: 0.3rem;
     }
 
+    h2 {
+      font-size: 1.3rem; /* ✅ Smaller heading */
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 0.85rem; /* ✅ Smaller text */
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+
+    /* ✅ HIDE ANIMATION ON MOBILE */
     ng-lottie {
-      max-width: 250px;
+      display: none;
     }
   }
 
   .form-section {
-    padding: 30px 25px;
+    padding: 20px 25px 25px 25px; /* ✅ Reduced padding */
+    overflow: visible; /* ✅ No internal scroll */
+
+    .logo {
+      margin-bottom: 20px;
+
+      mat-icon {
+        font-size: 24px;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+      }
+    }
+
+    form {
+      .full-width {
+        margin-bottom: 15px; /* ✅ Tighter spacing */
+      }
+
+      button[mat-raised-button] {
+        height: 42px; /* ✅ Slightly smaller */
+      }
+
+      .divider {
+        margin: 20px 0; /* ✅ Less spacing */
+      }
+
+      .auth-btn {
+        height: 42px; /* ✅ Slightly smaller */
+        margin-bottom: 10px;
+      }
+
+      .text-muted {
+        margin-top: 15px;
+        font-size: 0.85rem;
+      }
+    }
   }
 }
