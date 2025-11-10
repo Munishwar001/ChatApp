@@ -8,7 +8,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { LottieComponent } from 'ngx-lottie';
 import player from 'lottie-web';
-import { AuthApi } from '../service/auth-api';
 
 
 export function playerFactory() {
@@ -35,14 +34,14 @@ export class Login{
   loginForm: FormGroup;
   options: any; 
 
-  constructor(private fb: FormBuilder ,private authService:AuthApi) {
+  constructor(private fb: FormBuilder) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
 
     this.options = {
-      path:'./Digital Marketing.json', 
+      path: './Digital Marketing.json', 
       loop: true,
       autoplay: true
     };
@@ -51,14 +50,6 @@ export class Login{
   onLogin(): void {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-      this.authService.login(this.loginForm.value).subscribe({
-        next:(res)=>{
-          console.log(res);
-        } ,
-        error:(error)=>{
-           console.log("error in login ", error);
-        }
-      })
       console.log('Logging in with:', email, password);
     } else {
       this.loginForm.markAllAsTouched();

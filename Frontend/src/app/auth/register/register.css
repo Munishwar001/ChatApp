@@ -8,21 +8,17 @@ body, :host {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  height: 100vh;
+  min-height: 100vh; 
   margin: 0;
-  padding: 0;
   font-family: "Inter", "Roboto", sans-serif;
-  overflow: hidden;
+  padding: 20px; 
 }
 
 /* Main register card */
 .register-container {
   display: flex;
   max-width: 950px;
-  max-height: 90vh;
-  width: calc(100% - 40px);
-  margin: 20px;
+  width: 100%;
   border-radius: 20px;
   overflow: hidden;
   background: #ffffff;
@@ -31,6 +27,7 @@ body, :host {
 
   &:hover {
     box-shadow: 0 12px 45px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
   }
 }
 
@@ -41,11 +38,10 @@ body, :host {
   flex: 1;
   background: #f7f9fb;
   color: #1a1a1a;
-  padding: 40px 30px;
+  padding: 50px 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  overflow-y: auto;
 
   h1 {
     font-size: 2rem;
@@ -80,11 +76,10 @@ body, :host {
    ============================= */
 .form-section {
   flex: 1;
-  padding: 30px 40px;
+  padding: 40px 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  overflow-y: auto;
 
   .logo {
     display: flex;
@@ -196,88 +191,34 @@ body, :host {
    Responsive Design
    ============================= */
 @media (max-width: 850px) {
-  body, :host {
-    padding: 0;
-    align-items: center;
-  }
-
   .register-container {
     flex-direction: column;
     max-width: 500px;
-    width: calc(100% - 20px);
-    margin: 10px;
-    max-height: 98vh;
-    overflow-y: auto;
+    width: 90%; 
   }
 
-  /* ✅ Compact image section on mobile */
   .image-section {
-    padding: 20px 20px 15px 20px;
+    padding: 30px 20px;
     text-align: center;
-    overflow: visible;
 
-    h1 {
-      font-size: 1.5rem;
-      margin-bottom: 0.3rem;
+    h1, h2, p {
+      text-align: center;
     }
 
-    h2 {
-      font-size: 1.3rem;
-      margin-bottom: 0.5rem;
-    }
-
-    p {
-      font-size: 0.85rem;
-      margin-bottom: 0.5rem;
-      line-height: 1.4;
-    }
-
-    /* ✅ HIDE ANIMATION ON MOBILE */
     ng-lottie {
-      display: none;
+      max-width: 250px;
+      margin-bottom: 20px;
     }
   }
 
   .form-section {
-    padding: 20px 25px 25px 25px;
-    overflow: visible;
+    padding: 25px; 
+  }
 
-    .logo {
-      margin-bottom: 20px;
-
-      mat-icon {
-        font-size: 24px;
-      }
-
-      h2 {
-        font-size: 1.3rem;
-      }
-    }
-
-    form {
-      .full-width {
-        margin-bottom: 15px;
-      }
-
-      button[mat-raised-button] {
-        height: 42px;
-      }
-
-      .divider {
-        margin: 20px 0;
-      }
-
-      .auth-btn {
-        height: 42px;
-        margin-bottom: 10px;
-        font-size: 0.9rem;
-      }
-
-      .text-muted {
-        margin-top: 15px;
-        font-size: 0.85rem;
-      }
-    }
+  form button,
+  form .auth-btn {
+    font-size: 0.9rem;
+    height: 42px; 
   }
 }
 
@@ -287,15 +228,13 @@ body, :host {
 @media (max-width: 500px) {
   .register-container {
     border-radius: 16px;
-    width: calc(100% - 16px);
-    margin: 8px;
   }
 
   .form-section {
-    padding: 18px 20px 20px 20px;
+    padding: 20px;
   }
 
   .image-section {
-    padding: 18px 20px 12px 20px;
+    padding: 20px;
   }
 }
