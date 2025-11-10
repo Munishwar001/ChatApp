@@ -187,6 +187,34 @@ body, :host {
   }
 }
 
+.loader-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.inline-spinner {
+  display: inline-block;
+}
+
+::ng-deep .inline-spinner svg {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+button[mat-raised-button]:disabled {
+  background: #ccc !important;
+  color: #666 !important;
+  cursor: not-allowed;
+}
+
+button[mat-stroked-button]:disabled {
+  border-color: #ccc !important;
+  color: #999 !important;
+  cursor: not-allowed;
+}
+
 /* =============================
    Responsive Design
    ============================= */
