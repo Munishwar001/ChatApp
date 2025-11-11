@@ -8,6 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { LottieComponent } from 'ngx-lottie';
 import player from 'lottie-web';
+import { AuthApi } from '../service/auth-api';
+import { AuthLocalStorage } from '../service/auth-local-storage';
 
 
 export function playerFactory() {
@@ -34,7 +36,10 @@ export class Login{
   loginForm: FormGroup;
   options: any; 
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder ,
+    private authService :AuthApi ,
+    private authStorageService :AuthLocalStorage) 
+    {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
@@ -51,6 +56,15 @@ export class Login{
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       console.log('Logging in with:', email, password);
+      this.authService.login(this.loginForm.value).subscribe({
+        next : (res)=>{
+          console.log(res);
+          this.authStorageService.setItem('xtost',res);
+        } ,
+        error :(err)=>{
+          console.log(err);
+        }
+      })
     } else {
       this.loginForm.markAllAsTouched();
     }

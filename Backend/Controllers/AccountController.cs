@@ -104,9 +104,9 @@ namespace Backend.Controllers
             return Ok(new LoginResp
             {
                 Email = login.Email,
-                //AccessToken = jwtResult.AccessToken,
-                //AccessTokenExpiration = jwtResult.AccessTokenExpiration,
-                //RefreshToken = jwtResult.RefreshToken
+                AccessToken = jwtResult.AccessToken,
+                AccessTokenExpiration = jwtResult.AccessTokenExpiration,
+                RefreshToken = jwtResult.RefreshToken
             });
         }
     }

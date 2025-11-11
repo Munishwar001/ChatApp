@@ -8,7 +8,7 @@ using System.Text;
 
 namespace App.Application.Services
 {
-    public class JwtAuthManager(IEncryptionService encryptionService, IOptions<JwtSettings> jwtOptions) : IJwtAuthManager
+    public class JwtAuthManager(IEncryptionService encryptionService, IOptions<JwtSettings> jwtOptions ,IUserRepository userRepository) : IJwtAuthManager
     {
         private readonly byte[] _secret = Encoding.UTF8.GetBytes(jwtOptions.Value.Key);
 
@@ -47,7 +47,7 @@ namespace App.Application.Services
         {
             string newRefreshToken = encryptionService.GenerateRandomToken();
             // Add new and delete the old refresh token for the user
-            //await userRepository.AddNewDeleteOldUserRefreshToken(userId, newRefreshToken, oldRefreshToken, DateTime.UtcNow, DateTime.UtcNow.AddMinutes(jwtConfig.Value.RefreshTokenExpiration));
+            await userRepository.AddNewDeleteOldUserRefreshToken(userId, newRefreshToken, oldRefreshToken, DateTime.UtcNow, DateTime.UtcNow.AddDays(jwtOptions.Value.RefreshTokenExpiration));
 
             return newRefreshToken;
         }
