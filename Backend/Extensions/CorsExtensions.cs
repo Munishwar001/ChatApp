@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace Backend.Extensions
+﻿namespace Backend.Extensions
 {
     public static class CorsExtensions 
     {

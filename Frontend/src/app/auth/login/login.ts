@@ -5,12 +5,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { LottieComponent } from 'ngx-lottie';
 import player from 'lottie-web';
 import { AuthApi } from '../service/auth-api';
 import { AuthLocalStorage } from '../service/auth-local-storage';
-
 
 export function playerFactory() {
   return player;
@@ -38,7 +37,7 @@ export class Login{
 
   constructor(private fb: FormBuilder ,
     private authService :AuthApi ,
-    private authStorageService :AuthLocalStorage) 
+    private router :Router) 
     {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -59,7 +58,7 @@ export class Login{
       this.authService.login(this.loginForm.value).subscribe({
         next : (res)=>{
           console.log(res);
-          this.authStorageService.setItem('xtost',res);
+           this.router.navigate(['/']);
         } ,
         error :(err)=>{
           console.log(err);

@@ -1,0 +1,91 @@
+<div class="chat-list-container">
+  <!-- Search Bar -->
+  <div class="search-section">
+    <div class="search-box">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9 17C13.4183 17 17 13.4183 17 9C17 4.58172 13.4183 1 9 1C4.58172 1 1 4.58172 1 9C1 13.4183 4.58172 17 9 17Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M19 19L14.65 14.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <input 
+        type="text" 
+        placeholder="Search conversations..." 
+        [(ngModel)]="searchQuery"
+        (input)="filterChats()">
+    </div>
+    
+    <div class="filter-tabs">
+      <button 
+        class="filter-tab"
+        [class.active]="activeFilter === 'all'"
+        (click)="setFilter('all')">
+        All
+      </button>
+      <button 
+        class="filter-tab"
+        [class.active]="activeFilter === 'unread'"
+        (click)="setFilter('unread')">
+        Unread
+        <span class="badge" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
+      </button>
+      <button 
+        class="filter-tab"
+        [class.active]="activeFilter === 'groups'"
+        (click)="setFilter('groups')">
+        Groups
+      </button>
+    </div>
+  </div>
+
+  <!-- Chat List -->
+  <div class="chats-wrapper">
+    <div class="chat-item" 
+         *ngFor="let chat of filteredChats" 
+         [routerLink]="['/chat', chat.id]"
+         routerLinkActive="active">
+      
+      <div class="chat-avatar">
+        <img [src]="chat.avatar" [alt]="chat.name">
+        <span class="online-indicator" *ngIf="chat.isOnline"></span>
+      </div>
+      
+      <div class="chat-details">
+        <div class="chat-header">
+          <h3 class="chat-name">
+            {{ chat.name }}
+            <svg *ngIf="chat.type === 'group'" width="16" height="16" viewBox="0 0 16 16" fill="none" class="group-icon">
+              <path d="M11 7C12.1046 7 13 6.10457 13 5C13 3.89543 12.1046 3 11 3C9.89543 3 9 3.89543 9 5C9 6.10457 9.89543 7 11 7Z" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M5 7C6.10457 7 7 6.10457 7 5C7 3.89543 6.10457 3 5 3C3.89543 3 3 3.89543 3 5C3 6.10457 3.89543 7 5 7Z" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M11 9C9.67392 9 8.40215 9.52678 7.46447 10.4645C6.52678 11.4021 6 12.6739 6 14M5 9C3.67392 9 2.40215 9.52678 1.46447 10.4645C0.526784 11.4021 0 12.6739 0 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </h3>
+          <div class="chat-actions">
+            <button class="favorite-btn" (click)="toggleFavorite(chat, $event)" [class.active]="chat.isFavorite">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M8 2L9.708 5.45L13.5 6.01L10.75 8.71L11.416 12.49L8 10.69L4.584 12.49L5.25 8.71L2.5 6.01L6.292 5.45L8 2Z" 
+                      [attr.stroke]="chat.isFavorite ? '#f59e0b' : 'currentColor'" 
+                      [attr.fill]="chat.isFavorite ? '#f59e0b' : 'none'"
+                      stroke-width="1.5"/>
+              </svg>
+            </button>
+            <span class="chat-time">{{ chat.timestamp }}</span>
+          </div>
+        </div>
+        
+        <div class="chat-message">
+          <p>{{ chat.lastMessage }}</p>
+          <span class="unread-badge" *ngIf="chat.unreadCount > 0">{{ chat.unreadCount }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="filteredChats.length === 0">
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="32" fill="#f3f4f6"/>
+        <path d="M42 28C42 35.732 35.732 42 28 42C25.757 42 23.651 41.498 21.8 40.605L16 42L17.395 36.2C16.502 34.349 16 32.243 16 30C16 22.268 22.268 16 30 16C37.732 16 42 22.268 42 28Z" stroke="#9ca3af" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <h3>No conversations found</h3>
+      <p>Try adjusting your search or filters</p>
+    </div>
+  </div>
+</div>

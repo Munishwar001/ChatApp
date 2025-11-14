@@ -47,9 +47,60 @@ namespace App.Application.Services
         {
             string newRefreshToken = encryptionService.GenerateRandomToken();
             // Add new and delete the old refresh token for the user
-            await userRepository.AddNewDeleteOldUserRefreshToken(userId, newRefreshToken, oldRefreshToken, DateTime.UtcNow, DateTime.UtcNow.AddDays(jwtOptions.Value.RefreshTokenExpiration));
+            await userRepository.AddNewDeleteOldUserRefreshToken(userId, newRefreshToken, oldRefreshToken, DateTime.UtcNow, DateTime.UtcNow.AddMinutes(jwtOptions.Value.RefreshTokenExpiration));
 
             return newRefreshToken;
+        }
+
+        public string? GetUserIdFromAccessToken(string accessToken)
+        {
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = true,
+                ValidAudience = jwtOptions.Value.Audience,
+                ValidateIssuer = true,
+                ValidIssuer = jwtOptions.Value.Issuer,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(_secret),
+                ValidateLifetime = false // Do not validate lifetime here
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var principal = tokenHandler.ValidateToken(accessToken, tokenValidationParameters, out SecurityToken securityToken);
+            JwtSecurityToken? jwtSecurityToken = securityToken as JwtSecurityToken;
+            if (jwtSecurityToken is null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return null;
+            }
+
+            string? userId = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return null;
+            }
+
+            return encryptionService.Decrypt(userId);
+        }
+
+        public async Task<bool> ValidateRefreshToken(string userId, string refreshToken)
+        {
+            UserRefreshToken storedRefreshToken = await userRepository.GetRefreshToken(userId, refreshToken);
+            if (storedRefreshToken == null) { return false; }
+
+            // Ensure that the refresh token that we got from storage is not yet expired.
+            if (DateTime.UtcNow > storedRefreshToken.ExpiresAt)
+            {
+                // Delete from db if expired
+                await userRepository.DeleteUserRefreshToken(userId, refreshToken);
+                return false;
+            }
+            return true;
+        }
+
+        public async Task<bool> RevokeRefreshToken(string userId, string refreshToken)
+        {
+            return await userRepository.DeleteUserRefreshToken(userId, refreshToken);
         }
     }
 }

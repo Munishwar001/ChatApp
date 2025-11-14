@@ -1,0 +1,6 @@
+
+export enum ErrorCategory {
+    LOGIN_401 = 'LOGIN_401',
+    TOKEN_REFRESH_401 = 'TOKEN_REFRESH_401',
+    USER_DETAILS_401 = 'USER_DETAILS_401',
+}

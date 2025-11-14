@@ -109,5 +109,58 @@ namespace Backend.Controllers
                 RefreshToken = jwtResult.RefreshToken
             });
         }
+        [HttpPost("refresh-token")]
+        public async Task<IActionResult> RefreshToken(RefreshReq request)
+        {
+            try
+            {
+                string? userId = jwtAuthManager.GetUserIdFromAccessToken(request.AccessToken);
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return CustomUnauthorized401(message: "Invalid Token.", errorCategory: ErrorCategory.TOKEN_REFRESH_401);
+                }
+
+                bool validated = await jwtAuthManager.ValidateRefreshToken(userId, request.RefreshToken);
+                if (!validated)
+                {
+                    return CustomUnauthorized401(message: "Invalid Token.", errorCategory: ErrorCategory.TOKEN_REFRESH_401);
+                }
+
+                var user = await _userManager.FindByIdAsync(userId);
+                if (user == null)
+                {
+                    return CustomUnauthorized401(message: "Invalid Token.", errorCategory: ErrorCategory.TOKEN_REFRESH_401);
+                }
+
+                var jwtResult = await jwtAuthManager.GenerateToken(userId, user.UserName, request.RefreshToken);
+
+                return Ok(new JwtAuthResult
+                {
+                    AccessToken = jwtResult.AccessToken,
+                    AccessTokenExpiration = jwtResult.AccessTokenExpiration,
+                    RefreshToken = jwtResult.RefreshToken
+                });
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        [HttpPost("revoke-token")]
+        public async Task<IActionResult> RevokeToken([FromBody] RevokeReq revokeRequest)
+        {
+            try
+            {
+                await jwtAuthManager.RevokeRefreshToken(CurrentUserID, revokeRequest.RefreshToken);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+
     }
 }

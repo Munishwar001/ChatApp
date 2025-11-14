@@ -17,6 +17,38 @@
   },
   {
     "ContainingType": "Backend.Controllers.AccountController",
+    "Method": "RefreshToken",
+    "RelativePath": "api/Account/refresh-token",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "App.core.DTOs.Auth.RefreshReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend.Controllers.AccountController",
+    "Method": "RevokeToken",
+    "RelativePath": "api/Account/revoke-token",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "revokeRequest",
+        "Type": "App.core.DTOs.Auth.RevokeReq",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend.Controllers.AccountController",
     "Method": "SendOtp",
     "RelativePath": "api/Account/send-otp",
     "HttpMethod": "POST",
@@ -45,6 +77,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend.Controllers.TestController",
+    "Method": "ProtectedTest",
+    "RelativePath": "api/Test/protected",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

@@ -10,7 +10,7 @@ namespace App.Application
         public static IServiceCollection AddApplication(this IServiceCollection Services) 
         {
             Services.AddScoped<IJwtAuthManager ,JwtAuthManager>();
-            Services.AddScoped<IEncryptionService, EncryptionService>();
+            Services.AddSingleton<IEncryptionService, EncryptionService>();
 
             return Services;
         }

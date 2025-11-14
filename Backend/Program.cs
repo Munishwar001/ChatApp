@@ -2,6 +2,7 @@ using App.Infrastructure;
 using App.Infrastructure.Identity;
 using Backend;
 using Backend.Extensions;
+using Backend.Middleware;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -22,6 +23,8 @@ builder.Services.AddCorsPolicy();
 
 builder.Services.AddBackendServices(builder.Configuration);
 
+builder.Services.AddJwtBearerAuthentication(builder.Configuration);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,9 +35,13 @@ if (app.Environment.IsDevelopment())
 }
 app.UseCors("AllowFrontend");
 
+app.UseAuthentication();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.DecryptClaims();
 
 app.MapControllers();
 

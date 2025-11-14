@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using System.Security.Claims;
 
 namespace Backend.Controllers
 {
     public class BaseController : ControllerBase
     {
+        protected string CurrentUserID => User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        protected string CurrentUserEmail => User.FindFirst(ClaimTypes.Email)?.Value;
         protected IActionResult CustomUnauthorized401(string? message = null, string? errorCategory = null)
         {
             var problemDetailsFactory = HttpContext.RequestServices.GetRequiredService<ProblemDetailsFactory>();
