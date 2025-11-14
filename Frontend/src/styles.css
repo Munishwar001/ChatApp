@@ -2,6 +2,9 @@
 
 /* html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; padding:none; } */
+body{
+  margin:0%;
+}
 .success-snackbar {
   background-color: #4caf50;
   color: white;

@@ -39,11 +39,12 @@
   background: #f9fafb;
   transition: all 0.2s;
   outline: none;
+  box-sizing: border-box;
 }
 
 .search-box input:focus {
   background: #ffffff;
-  border-color: #0094F0;
+  border-color: #0094f0;
   box-shadow: 0 0 0 3px rgba(0, 148, 240, 0.1);
 }
 
@@ -78,9 +79,9 @@
 }
 
 .filter-tab.active {
-  background: #0094F0;
+  background: #0094f0;
   color: #ffffff;
-  border-color: #0094F0;
+  border-color: #0094f0;
 }
 
 .filter-tab .badge {
@@ -96,7 +97,7 @@
 
 .filter-tab.active .badge {
   background: #ffffff;
-  color: #0094F0;
+  color: #0094f0;
 }
 
 /* Chats Wrapper */
@@ -124,7 +125,7 @@
 
 .chat-item.active {
   background: #eff6ff;
-  border-left-color: #0094F0;
+  border-left-color: #0094f0;
 }
 
 /* Avatar */
@@ -239,7 +240,7 @@
 }
 
 .unread-badge {
-  background: #0094F0;
+  background: #0094f0;
   color: #ffffff;
   font-size: 11px;
   font-weight: 600;

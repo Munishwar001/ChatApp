@@ -1,0 +1,270 @@
+<div class="chat-window-container" *ngIf="chat">
+  <!-- Header -->
+  <div class="chat-header">
+    <div class="header-left">
+      <button class="back-btn" [routerLink]="['/chats']">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M15 18L9 12L15 6"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+
+      <div class="chat-user-info">
+        <div class="user-avatar">
+          <img [src]="chat.avatar" [alt]="chat.name" />
+          <span class="online-status" *ngIf="chat.isOnline"></span>
+        </div>
+        <div class="user-details">
+          <h2>{{ chat.name }}</h2>
+          <span class="status-text" *ngIf="chat.isOnline">Online</span>
+          <span class="status-text" *ngIf="!chat.isOnline">Last seen recently</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button class="icon-btn">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M18.3077 13.4583C17.1026 13.4583 15.9359 13.2692 14.8462 12.9167C14.5128 12.8013 14.141 12.8846 13.8846 13.141L12.0513 15.4423C9.24359 14.0064 5.99359 10.7949 4.55769 7.94872L6.84615 6.08974C7.10256 5.83333 7.19231 5.46795 7.07692 5.12821C6.72436 4.04487 6.53846 2.87821 6.53846 1.67308C6.53846 1.30128 6.23718 1 5.86538 1H2.17308C1.80128 1 1.5 1.30128 1.5 1.67308C1.5 11.5962 9.40385 19.5 19.3269 19.5C19.6987 19.5 20 19.1987 20 18.8269V15.1346C20 14.7628 19.6987 14.4615 19.3269 14.4615C19.3269 14.4615 18.3077 13.4583 18.3077 13.4583Z"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+      <button class="icon-btn">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M10 10.8333C10.4602 10.8333 10.8333 10.4602 10.8333 10C10.8333 9.53976 10.4602 9.16667 10 9.16667C9.53976 9.16667 9.16667 9.53976 9.16667 10C9.16667 10.4602 9.53976 10.8333 10 10.8333Z"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M10 5C10.4602 5 10.8333 4.62691 10.8333 4.16667C10.8333 3.70643 10.4602 3.33333 10 3.33333C9.53976 3.33333 9.16667 3.70643 9.16667 4.16667C9.16667 4.62691 9.53976 5 10 5Z"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M10 16.6667C10.4602 16.6667 10.8333 16.2936 10.8333 15.8333C10.8333 15.3731 10.4602 15 10 15C9.53976 15 9.16667 15.3731 9.16667 15.8333C9.16667 16.2936 9.53976 16.6667 10 16.6667Z"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Messages Area -->
+  <div class="chat-messages">
+    <div class="messages-list">
+      <div
+        *ngFor="let message of messages"
+        class="message-wrapper"
+        [class.message-sent]="message.sender === 'me'"
+        [class.message-received]="message.sender === 'other'"
+      >
+        <div class="message-bubble">
+          <p>{{ message.text }}</p>
+          <div class="message-meta">
+            <span class="message-time">{{ message.timestamp }}</span>
+            <span class="message-status" *ngIf="message.sender === 'me' && message.status">
+              <svg
+                *ngIf="message.status === 'sent'"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+              >
+                <path
+                  d="M13.3333 4L6 11.3333L2.66667 8"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <svg
+                *ngIf="message.status === 'delivered' || message.status === 'read'"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+              >
+                <path
+                  d="M14.6667 4L7.33333 11.3333L4 8"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M10.6667 4L3.33333 11.3333"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Typing Indicator -->
+      <div class="message-wrapper message-received" *ngIf="isTyping">
+        <div class="message-bubble typing-indicator">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- Input Area -->
+  <div class="chat-input-area">
+     
+    <div class="emoji-picker-container" *ngIf="showPicker">
+      <emoji-picker (emoji-click)="addEmoji($event)"></emoji-picker>
+    </div>
+   
+    <div class="input-wrapper">
+      <button class="attachment-btn">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M21.44 11.05L12.25 20.24C11.1242 21.3658 9.59723 21.9983 8.005 21.9983C6.41277 21.9983 4.88583 21.3658 3.76 20.24C2.63417 19.1142 2.00166 17.5872 2.00166 15.995C2.00166 14.4028 2.63417 12.8758 3.76 11.75L12.33 3.18C13.0806 2.42944 14.0991 2.00722 15.16 2.00722C16.2209 2.00722 17.2394 2.42944 17.99 3.18C18.7406 3.93056 19.1628 4.94908 19.1628 6.01C19.1628 7.07092 18.7406 8.08944 17.99 8.84L9.41 17.41C9.03472 17.7853 8.52544 17.9964 7.995 17.9964C7.46456 17.9964 6.95528 17.7853 6.58 17.41C6.20472 17.0347 5.99361 16.5254 5.99361 15.995C5.99361 15.4646 6.20472 14.9553 6.58 14.58L15.07 6.1"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+
+      <div class="text-input-container">
+        <textarea
+          [(ngModel)]="newMessage"
+          (keypress)="onKeyPress($event)"
+          placeholder="Type a message..."
+          rows="1"
+        ></textarea>
+      </div>
+
+      <button class="emoji-btn" (click)="togglePicker()">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M8 14C8 14 9.5 16 12 16C14.5 16 16 14 16 14"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M9 9H9.01"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M15 9H15.01"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+
+      <button class="send-btn" (click)="sendMessage()" [disabled]="!newMessage.trim()">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M22 2L11 13"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M22 2L15 22L11 13L2 9L22 2Z"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Empty State when no chat selected -->
+<div class="empty-chat-state" *ngIf="!chat">
+  <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="40" cy="40" r="40" fill="#f3f4f6" />
+    <path
+      d="M52 35C52 44.665 44.665 52 35 52C31.9463 52 29.0637 51.2475 26.5 49.9062L20 52L22.0938 45.5C20.7525 42.9363 20 40.0537 20 37C20 27.335 27.335 20 37 20C46.665 20 52 27.335 52 35Z"
+      stroke="#9ca3af"
+      stroke-width="2.5"
+      stroke-linecap="round"
+    />
+  </svg>
+  <h2>Select a chat to start messaging</h2>
+  <p>Choose a conversation from the list to view messages</p>
+</div>

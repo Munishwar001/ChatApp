@@ -10,16 +10,16 @@ export const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'home'
+        redirectTo: 'chats'
       },
       {
-        path: 'home',
+        path: 'chats',
         loadComponent: () => import('./features/home/home').then(m => m.Home)
       },
-      // {
-      //   path: 'dashboard',
-      //   loadComponent: () => import('./features/dashboard/dashboard').then(m => m.Dashboard)
-      // },
+      {
+        path: 'chat/:id',
+        loadComponent: () => import('./features/chat-window/chat-window').then(m => m.ChatWindow)
+      },
       // {
       //   path: 'profile',
       //   loadComponent: () => import('./features/profile/profile').then(m => m.Profile)

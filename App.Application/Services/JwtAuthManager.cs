@@ -47,7 +47,7 @@ namespace App.Application.Services
         {
             string newRefreshToken = encryptionService.GenerateRandomToken();
             // Add new and delete the old refresh token for the user
-            await userRepository.AddNewDeleteOldUserRefreshToken(userId, newRefreshToken, oldRefreshToken, DateTime.UtcNow, DateTime.UtcNow.AddMinutes(jwtOptions.Value.RefreshTokenExpiration));
+            await userRepository.AddNewDeleteOldUserRefreshToken(userId, newRefreshToken, oldRefreshToken, DateTime.UtcNow, DateTime.UtcNow.AddDays(jwtOptions.Value.RefreshTokenExpiration));
 
             return newRefreshToken;
         }
