@@ -29,6 +29,9 @@
     <PackageJsonDependenciesAngularPlatformBrowser Condition="$(PackageJsonDependenciesAngularPlatformBrowser) == ''">^20.3.0</PackageJsonDependenciesAngularPlatformBrowser>
     <PackageJsonDependenciesAngularRouter Condition="$(PackageJsonDependenciesAngularRouter) == ''">^20.3.0</PackageJsonDependenciesAngularRouter>
     <PackageJsonDependenciesCtrlNgxEmojiMart Condition="$(PackageJsonDependenciesCtrlNgxEmojiMart) == ''">^9.3.0</PackageJsonDependenciesCtrlNgxEmojiMart>
+    <PackageJsonDependenciesNgrxEffects Condition="$(PackageJsonDependenciesNgrxEffects) == ''">^20.1.0</PackageJsonDependenciesNgrxEffects>
+    <PackageJsonDependenciesNgrxStore Condition="$(PackageJsonDependenciesNgrxStore) == ''">^20.1.0</PackageJsonDependenciesNgrxStore>
+    <PackageJsonDependenciesNgrxStoreDevtools Condition="$(PackageJsonDependenciesNgrxStoreDevtools) == ''">^20.1.0</PackageJsonDependenciesNgrxStoreDevtools>
     <PackageJsonDependenciesBootstrap Condition="$(PackageJsonDependenciesBootstrap) == ''">^5.3.8</PackageJsonDependenciesBootstrap>
     <PackageJsonDependenciesEmojiPickerElement Condition="$(PackageJsonDependenciesEmojiPickerElement) == ''">^1.27.0</PackageJsonDependenciesEmojiPickerElement>
     <PackageJsonDependenciesJestEditorSupport Condition="$(PackageJsonDependenciesJestEditorSupport) == ''">*</PackageJsonDependenciesJestEditorSupport>

@@ -43,7 +43,6 @@ export class AuthApi {
       let refreshReq = this.getRefreshRequest();
 
       if (refreshReq.accessToken && refreshReq.refreshToken) {
-        alert("request sending for the refresh token");
         return this.refreshToken(this.getRefreshRequest()).pipe(
           switchMap(() => {
             return of(true);

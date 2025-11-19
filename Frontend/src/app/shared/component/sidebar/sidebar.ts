@@ -3,6 +3,10 @@ import { RouterLink, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthApi } from '../../../auth/service/auth-api';
 import { finalize } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { selectLoggedUser} from '../../../store/user/user.selectors';
+import { Input ,SimpleChanges } from '@angular/core';
+
 @Component({
   selector: 'app-sidebar',
   imports: [RouterLink, RouterModule, CommonModule],
@@ -12,14 +16,18 @@ import { finalize } from 'rxjs';
 export class Sidebar {
   isSidebarOpen = false;
   private innerWidth = 0;
- 
-  constructor(private authService:AuthApi){}
+
+  @Input() loggedUser: any; 
+
+  constructor(private authService:AuthApi ,private store:Store){}
+  
   ngOnInit() {
     this.innerWidth = window.innerWidth;
     // Auto-open sidebar on desktop
     if (this.innerWidth > 767) {
       this.isSidebarOpen = true;
     }
+    console.log('Logged User in Sidebar:', this.loggedUser);
   }
 
   @HostListener('window:resize', ['$event'])
@@ -54,7 +62,12 @@ export class Sidebar {
     console.log('Creating new chat...');
     this.closeSidebar();
   }
-
+   
+     ngOnChanges(changes: SimpleChanges) {
+    if (changes['loggedUser']) {
+      console.log('Logged User in Sidebar (updated):', this.loggedUser);
+    }
+  }
   logout() { 
      alert("log out clicked");
     this.authService.revokeRefreshToken().pipe(

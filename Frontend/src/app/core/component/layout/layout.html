@@ -1,7 +1,7 @@
 
 <!-- layout.component.html -->
 <div class="layout">
-  <app-sidebar></app-sidebar>
+  <app-sidebar [loggedUser]="loggedUser$ | async"></app-sidebar>
   
   <div class="main-content">
     <app-mobile-header 

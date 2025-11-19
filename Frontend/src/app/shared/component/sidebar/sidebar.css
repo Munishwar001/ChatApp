@@ -445,3 +445,45 @@
     font-size: 10px;
   }
 }
+/* Tooltip container */
+.tooltip-container {
+  position: relative;
+  /* display: inline-block; */
+}
+
+/* Tooltip hidden by default */
+.email-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  background-color: #111827;
+  color: #ffffff;
+  text-align: center;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  position: absolute;
+  bottom: 120%;       /* Above the name */
+  left: 0;
+  transform: translateX(-20%);
+  transition: opacity 0.2s ease-in-out;
+  z-index: 10;
+}
+
+/* Arrow under tooltip */
+.email-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%; 
+  left: 20%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #111827 transparent transparent transparent;
+}
+
+/* Show tooltip on hover */
+.tooltip-container:hover .email-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
