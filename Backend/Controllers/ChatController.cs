@@ -27,7 +27,7 @@ namespace Backend.Controllers
         public async Task<ActionResult<string>> Ask([FromBody] ChatRequest request)
         {
             // Set your Hugging Face API token
-            string apiKey = "YOUR_HUGGINGFACE_API_KEY";
+            //string apiKey = "YOUR_HUGGINGFACE_API_KEY";
             _httpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", apiKey);
 
@@ -42,7 +42,7 @@ namespace Backend.Controllers
             };
 
             // Replace with the model you copied
-            var modelName = "YOUR_MODEL_NAME";
+            //var modelName = "YOUR_MODEL_NAME";
 
             var response = await _httpClient.PostAsJsonAsync(
                 $"https://api-inference.huggingface.co/models/{modelName}",
