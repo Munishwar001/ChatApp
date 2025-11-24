@@ -21,6 +21,7 @@ namespace App.Infrastructure
             Service.AddScoped<IRedisService , RedisService>();
             Service.AddScoped<IEmailService, EmailService>();
             Service.AddScoped<IUserRepository, UserRepository>();
+            Service.AddScoped<IChatRepository,ChatRepository>();
 
             return Service;
         }

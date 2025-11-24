@@ -454,3 +454,133 @@
 .chat-input-area {
   position: relative; /* allows absolute child */
 }
+/* Image Preview Modal */
+.image-preview-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+  padding: 20px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.image-preview-content {
+  position: relative;
+  background: #ffffff;
+  border-radius: 16px;
+  max-width: 500px;
+  width: 100%;
+  overflow: hidden;
+  animation: scaleIn 0.2s ease-out;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.close-preview-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  color: #ffffff;
+  border-radius: 50%;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  backdrop-filter: blur(4px);
+}
+
+.close-preview-btn:hover {
+  background: rgba(0, 0, 0, 0.8);
+  /* transform: rotate(90deg); */
+}
+
+.preview-header {
+  padding: 20px 24px;
+  background: linear-gradient(135deg, #0094F0 0%, #0077c2 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.preview-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  font-size: 13px;
+  backdrop-filter: blur(10px);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background: #10b981;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.preview-image-container {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f9fafb;
+}
+
+.preview-image-container img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}

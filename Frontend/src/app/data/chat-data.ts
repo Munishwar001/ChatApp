@@ -193,5 +193,17 @@ export const DUMMY_CHATS: Chat[] = [
     isFavorite: false,
     isArchived: true,
     type: 'group'
+  },
+   {
+    id: 'x9h2l0aibot',
+    name: 'Aria',
+    avatar: 'https://www.google.com/imgres?q=avatar%20ui%20image&imgurl=https%3A%2F%2Fwww.shutterstock.com%2Fimage-illustration%2F3d-illustration-smiling-happy-hipster-260nw-1882751569.jpg&imgrefurl=https%3A%2F%2Fwww.shutterstock.com%2Fsearch%2Fux-avatar&docid=1ypn5P-HzhKAWM&tbnid=DyH5lGvInT4BQM&vet=12ahUKEwiC9PusnIORAxXfxjgGHcRKEVIQM3oECGYQAA..i&w=325&h=280&hcb=2&ved=2ahUKEwiC9PusnIORAxXfxjgGHcRKEVIQM3oECGYQAA',
+    lastMessage: 'Jennifer: New policy updates available',
+    timestamp: '2 weeks ago',
+    unreadCount: 0,
+    isOnline: false,
+    isFavorite: false,
+    isArchived: true,
+    type: 'individual'
   }
 ];
