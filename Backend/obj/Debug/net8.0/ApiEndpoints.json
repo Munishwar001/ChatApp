@@ -81,16 +81,6 @@
   },
   {
     "ContainingType": "Backend.Controllers.ChatController",
-    "Method": "Index",
-    "RelativePath": "api/Chat",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Backend.Controllers.ChatController",
     "Method": "Ask",
     "RelativePath": "api/Chat/ask",
     "HttpMethod": "POST",
@@ -114,6 +104,54 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "Backend.Controllers.ChatController",
+    "Method": "CreateOrGetChat",
+    "RelativePath": "api/Chat/create-or-get",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "App.core.DTOs.Chat.CreateChatRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend.Controllers.ChatController",
+    "Method": "GetMessages",
+    "RelativePath": "api/Chat/messages/{chatId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "chatId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend.Controllers.ChatController",
+    "Method": "SendMessage",
+    "RelativePath": "api/Chat/send",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "App.core.DTOs.Chat.SendMessageRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "Backend.Controllers.TestController",

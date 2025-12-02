@@ -1,10 +1,14 @@
-
-import { Component, OnInit ,CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { DUMMY_CHATS, Chat } from '../../data/chat-data';
-
+import { combineLatest } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { selectAllChats, selectLoggedUser } from '../../store/user/user.selectors';
+import { ChatApi } from '../../services/chat-api';
+import { map, filter } from 'rxjs/operators';
+import { AI_USER_ID } from '../../constants';
 interface Message {
   id: number;
   text: string;
@@ -16,10 +20,10 @@ interface Message {
 @Component({
   selector: 'app-chat-window',
   standalone: true,
-  imports: [CommonModule, FormsModule,RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './chat-window.html',
   styleUrl: './chat-window.css',
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ChatWindow implements OnInit {
   chat: Chat | null = null;
@@ -27,77 +31,84 @@ export class ChatWindow implements OnInit {
   newMessage: string = '';
   isTyping: boolean = false;
   showPicker = false;
-  constructor(private route: ActivatedRoute) {}
+  isAIChat: boolean = false;
+  currentUserId: string | null = null;
+  chatId: string | null = null;
+  showImagePreview: boolean = false; 
+
+  constructor(private route: ActivatedRoute, private store: Store, private chatService: ChatApi) {}
 
   ngOnInit() {
-    // Get chat ID from route params
-    this.route.params.subscribe(params => {
-      const chatId = params['id'];
-      this.chat = DUMMY_CHATS.find(c => c.id === chatId) || null;
-      
-      if (this.chat) {
-        this.loadMessages();
-      }
+    console.log('ChatWindow initialized');
+    const loggedUser$ = this.store.select(selectLoggedUser).pipe(filter((user) => !!user));
+    const routeParams$ = this.route.params.pipe(
+      map((params) => {
+      const chatUserId = params['id'];
+      this.isAIChat = chatUserId === AI_USER_ID;
+      return chatUserId;
+    }),
+      filter((chatUserId) => !!chatUserId)
+    );
+    const allChats$ = this.store.select(selectAllChats);
+
+    combineLatest([loggedUser$, routeParams$, allChats$]).subscribe(([user, chatUserId, chats]) => {
+      this.currentUserId = user.id;
+
+      // Find the chat object for the UI
+      this.chat = chats.find((c) => c.id === chatUserId) || null;
+
+      this.chatService.createOrGetChat(this.currentUserId, chatUserId ,this.isAIChat).subscribe((chatId) => {
+        this.chatId = chatId;
+        this.loadMessages(chatId);
+      });
     });
   }
 
-  loadMessages() {
-    // Sample messages - replace with real data
-    this.messages = [
-      {
-        id: 1,
-        text: "Hey! How are you doing?",
-        sender: 'other',
-        timestamp: '10:30 AM'
+  loadMessages(chatId: string) {
+    console.log('Loading messages for chat ID: ' + chatId);
+    this.chatService.getMessages(chatId).subscribe({
+      next: (messages: any[]) => {
+        // Map backend messages to front-end model
+        this.messages = messages.map((msg) => ({
+          id: msg.messageId,
+          text: msg.messageText,
+          sender: msg.senderId === this.currentUserId ? 'me' : 'other',
+          timestamp: new Date(msg.createdAt).toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+          }),
+          status: 'sent',
+        }));
+
+        setTimeout(() => this.scrollToBottom(), 100);
       },
-      {
-        id: 2,
-        text: "I'm doing great! Thanks for asking 😊",
-        sender: 'me',
-        timestamp: '10:32 AM',
-        status: 'read'
+      error: (err: any) => {
+        console.error('Error loading messages', err);
       },
-      {
-        id: 3,
-        text: "That's wonderful to hear!",
-        sender: 'other',
-        timestamp: '10:33 AM'
-      },
-      {
-        id: 4,
-        text: "Are we still on for the meeting tomorrow?",
-        sender: 'other',
-        timestamp: '10:35 AM'
-      },
-      {
-        id: 5,
-        text: "Yes, absolutely! I'll be there at 2 PM.",
-        sender: 'me',
-        timestamp: '10:36 AM',
-        status: 'delivered'
-      }
-    ];
+    });
   }
 
   sendMessage() {
-    if (this.newMessage.trim()) {
-      const message: Message = {
-        id: this.messages.length + 1,
-        text: this.newMessage,
-        sender: 'me',
-        timestamp: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }),
-        status: 'sent'
-      };
-      
-      this.messages.push(message);
-      this.newMessage = '';
-      
-      // Simulate typing indicator
-      this.simulateTyping();
-      
-      // Scroll to bottom
-      setTimeout(() => this.scrollToBottom(), 100);
+    if (!this.newMessage || this.newMessage.trim() === '') {
+      return;
     }
+
+    const payload = {
+      chatId: this.chatId,
+      senderId: this.currentUserId,
+      messageText: this.newMessage,
+      messageType: 'text',
+    };
+
+    console.log('Sending message payload:', payload);
+    this.chatService.sendMessage(payload).subscribe((message) => {
+      this.messages.push(message);
+
+      this.newMessage = '';
+      this.loadMessages(this.chatId!);
+      // this.simulateTyping();
+      setTimeout(() => this.scrollToBottom(), 100);
+    });
   }
 
   simulateTyping() {
@@ -120,12 +131,20 @@ export class ChatWindow implements OnInit {
       this.sendMessage();
     }
   }
-  
+
   togglePicker() {
     this.showPicker = !this.showPicker;
   }
 
-   addEmoji(event: any) {
+  addEmoji(event: any) {
     this.newMessage += event.detail.unicode;
+  }
+
+   openImagePreview() {
+    this.showImagePreview = true;
+  }
+
+  closeImagePreview() {
+    this.showImagePreview = false;
   }
 }

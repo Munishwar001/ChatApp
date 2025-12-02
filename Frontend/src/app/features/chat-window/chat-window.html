@@ -21,7 +21,7 @@
       </button>
 
       <div class="chat-user-info">
-        <div class="user-avatar">
+        <div class="user-avatar" (click)="openImagePreview()">
           <img [src]="chat.avatar" [alt]="chat.name" />
           <span class="online-status" *ngIf="chat.isOnline"></span>
         </div>
@@ -267,4 +267,26 @@
   </svg>
   <h2>Select a chat to start messaging</h2>
   <p>Choose a conversation from the list to view messages</p>
+</div>
+
+<!-- Image Preview Modal -->
+<div class="image-preview-overlay" *ngIf="showImagePreview && chat" (click)="closeImagePreview()">
+  <div class="image-preview-content" (click)="$event.stopPropagation()">
+    <button class="close-preview-btn" (click)="closeImagePreview()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="preview-header">
+      <h3>{{ chat.name }}</h3>
+      <span class="status-badge" *ngIf="chat.isOnline">
+        <span class="status-dot"></span>
+        Online
+      </span>
+    </div>
+    <div class="preview-image-container">
+      <img [src]="chat.avatar" [alt]="chat.name" />
+    </div>
+  </div>
 </div>
